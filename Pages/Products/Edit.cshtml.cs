@@ -31,7 +31,7 @@ namespace AspNetCoreManyToManyDemo.Pages.Products
 
         public SelectList TagOptions { get; set; }
 
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             var product = await dbContext.Products.Include(p => p.Tags).FirstOrDefaultAsync(p => p.Id == id);
             if (product == null)
