@@ -1,0 +1,20 @@
+@page
+@model AspNetCoreManyToManyDemo.Pages.Products.EditModel
+<h1>Edit product</h1>
+<form method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input type="text" class="form-control" asp-for="Name">
+    </div>
+    <div class="form-group">
+        <label asp-for="Quantity"></label>
+        <input type="number" class="form-control" asp-for="Quantity">
+    </div>
+    <div class="form-group">
+        <label asp-for="TagIds"></label>
+        <select asp-for="TagIds" asp-items="@Model.TagOptions" class="form-control" multiple></select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>
+<div asp-validation-summary="All"></div>

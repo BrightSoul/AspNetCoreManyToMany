@@ -1,0 +1,9 @@
+@page
+@model AspNetCoreManyToManyDemo.Pages.Tags.EditModel
+<h1>Edit tag</h1>
+<form method="post">
+    <label asp-for="Name"></label>
+    <input type="text" class="form-control" asp-for="Name">
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>
+<div asp-validation-summary="All"></div>

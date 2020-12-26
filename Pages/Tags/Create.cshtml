@@ -1,0 +1,9 @@
+@page
+@model AspNetCoreManyToManyDemo.Pages.Tags.CreateModel
+<h1>Create new tag</h1>
+<form method="post">
+    <label asp-for="Name"></label>
+    <input type="text" class="form-control" asp-for="Name">
+    <button type="submit" class="btn btn-primary mt-3">Create</button>
+</form>
+<div asp-validation-summary="All"></div>

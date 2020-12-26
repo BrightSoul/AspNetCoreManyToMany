@@ -1,0 +1,56 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-8">
+        <h2>Products</h2>
+        <table class="table table-sm">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Tags</th>
+            <th></th>
+        </tr>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Quantity</td>
+                <td>@string.Join(", ", product.Tags.Select(t => t.Name))</td>
+                <td class="text-right">
+                    <form asp-page="Products/Delete" asp-route-id="@product.Id">
+                        <a asp-page="Products/Edit" asp-route-id="@product.Id" class="btn btn-primary btn-sm">Edit</a>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </table>
+        <a asp-page="Products/Create" class="btn btn-success">Create new product</a>
+    </div>
+    <div class="col-4">
+        <h2>Tags</h2>
+        <table class="table table-sm">
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        @foreach (var tag in Model.Tags)
+        {
+            <tr>
+                <td>@tag.Name</td>
+                <td class="text-right">
+                    <form asp-page="Tags/Delete" asp-route-id="@tag.Id">
+                        <a asp-page="Tags/Edit" asp-route-id="@tag.Id" class="btn btn-primary btn-sm">Edit</a>
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </table>
+        <a asp-page="Tags/Create" class="btn btn-success">Create new tag</a>
+    </div>
+</div>
