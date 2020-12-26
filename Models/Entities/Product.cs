@@ -18,6 +18,6 @@ namespace AspNetCoreManyToManyDemo.Models.Entities
         public int Quantity { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public ICollection<Tag> Tags { get; set; }
     }
 }
