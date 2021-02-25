@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreManyToManyDemo.Models.Entities;
@@ -58,15 +56,32 @@ namespace AspNetCoreManyToManyDemo.Pages.Products
 
             if (ModelState.IsValid && await TryUpdateModelAsync(product, string.Empty, x => x.Name, x => x.Quantity))
             {
-                product.Tags.Clear();
+                foreach (var tag in product.Tags)
+                {
+                    // Remove tags no longer associated to the product
+                    if (!TagIds.Contains(tag.Id))
+                    {
+                        product.Tags.Remove(tag);
+                    }
+                }
+
+                // Extract only new tags associated with the product (this preserves previously created associations)
+                TagIds = TagIds.Except(product.Tags.Select(tag => tag.Id)).ToArray();
                 if (TagIds.Length > 0)
                 {
                     var selectedTags = await dbContext.Tags.Where(t => TagIds.Contains(t.Id)).ToListAsync();
                     foreach (var selectedTag in selectedTags)
                     {
-                        product.Tags.Add(selectedTag);
+                        ProductTag productTag = new(
+                            productId: product.Id,
+                            tagId: selectedTag.Id,
+                            associatedAt: DateTime.UtcNow,
+                            description: "Some info about this association");
+                        
+                        dbContext.ProductTags.Add(productTag);
                     }
                 }
+
                 product.ModifiedAt = DateTime.Now;
                 await dbContext.SaveChangesAsync();
                 return RedirectToPage("/Index");

@@ -40,6 +40,27 @@ namespace AspNetCoreManyToManyDemo.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("AspNetCoreManyToManyDemo.Models.Entities.ProductTag", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("AssociatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ProductId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("ProductTags");
+                });
+
             modelBuilder.Entity("AspNetCoreManyToManyDemo.Models.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -61,34 +82,23 @@ namespace AspNetCoreManyToManyDemo.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("ProductTag", b =>
+            modelBuilder.Entity("AspNetCoreManyToManyDemo.Models.Entities.ProductTag", b =>
                 {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TagsId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ProductsId", "TagsId");
-
-                    b.HasIndex("TagsId");
-
-                    b.ToTable("ProductTag");
-                });
-
-            modelBuilder.Entity("ProductTag", b =>
-                {
-                    b.HasOne("AspNetCoreManyToManyDemo.Models.Entities.Product", null)
+                    b.HasOne("AspNetCoreManyToManyDemo.Models.Entities.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductsId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AspNetCoreManyToManyDemo.Models.Entities.Tag", null)
+                    b.HasOne("AspNetCoreManyToManyDemo.Models.Entities.Tag", "Tag")
                         .WithMany()
-                        .HasForeignKey("TagsId")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Tag");
                 });
 #pragma warning restore 612, 618
         }
