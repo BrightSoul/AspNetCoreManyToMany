@@ -3,6 +3,8 @@ This is an ASP.NET Core Razor Page application for .NET 5 which demonstrates man
 
 ![demo.png](demo.png)
 
+> Also check the `join-entity` branch which demonstrates the use of a join entity `ProductTag` which carries additional informations abount the association between `Product` and `Tag`.
+
 ## Getting started
 Just download or clone this project, then open its folder in Visual Studio Code and press `F5` to run the application.
 
